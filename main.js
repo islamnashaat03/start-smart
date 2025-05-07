@@ -184,19 +184,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Testimonial slider
-    const track = document.querySelector('.testimonial-track');
-    const dots = document.querySelectorAll('.testimonial-dot');
-    const cards = document.querySelectorAll('.testimonial-card');
-    const cardWidth = cards[0].offsetWidth + parseInt(window.getComputedStyle(cards[0]).marginLeft) * 2;
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            track.style.transform = `translateX(-${cardWidth * index}px)`;
-            dots.forEach(d => d.classList.remove('active'));
-            dot.classList.add('active');
-        });
-    });
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:20,
+        responsiveClass:true,
+        dots:true,
+        nav:false,
+        responsive:{
+            0:{
+                items:1,
+            },
+            600:{
+                items:2,
+            },
+            1000:{
+                items:3,
+            }
+        }
+    })
 
     // Back to top button
     const backToTopBtn = document.getElementById('back-to-top');
