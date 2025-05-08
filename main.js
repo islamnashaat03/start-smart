@@ -237,3 +237,49 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Countdown Timer Function
+function createCountdown(targetDate) {
+    // Get DOM elements to update
+    const daysElement = document.getElementById('days');
+    const hoursElement = document.getElementById('hours');
+    const minutesElement = document.getElementById('minutes');
+    const secondsElement = document.getElementById('seconds');
+    
+    // Update the countdown every second
+    const countdownInterval = setInterval(function() {
+      // Get current date and time
+      const currentDate = new Date().getTime();
+      
+      // Calculate the time difference between now and the target date
+      const timeRemaining = targetDate - currentDate;
+      
+      // Check if countdown is finished
+      if (timeRemaining <= 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('countdown').innerHTML = "Countdown Expired!";
+        return;
+      }
+      
+      // Calculate days, hours, minutes, seconds
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      
+      // Update the DOM elements
+      daysElement.innerHTML = days.toString().padStart(2, '0');
+      hoursElement.innerHTML = hours.toString().padStart(2, '0');
+      minutesElement.innerHTML = minutes.toString().padStart(2, '0');
+      secondsElement.innerHTML = seconds.toString().padStart(2, '0');
+      
+    }, 1000); // update every second
+  }
+// Usage example
+document.addEventListener('DOMContentLoaded', function() {
+    // Set your target date here (year, month (0-11), day, hour, minute, second)
+    const targetDate = new Date(2025, 5, 1, 12, 0, 0).getTime();
+    createCountdown(targetDate);
+  });
+  
+  // Alternative usage with dynamic target date setting
