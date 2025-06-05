@@ -186,6 +186,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('.owl-carousel').owlCarousel({
         loop:true,
+        autoplay:true,
+        autoplayTimeout:3000,
+        linear:true,
+        autoplayHoverPause:true,
         margin:20,
         responsiveClass:true,
         dots:true,
@@ -278,7 +282,7 @@ function createCountdown(targetDate) {
 // Usage example
 document.addEventListener('DOMContentLoaded', function() {
     // Set your target date here (year, month (0-11), day, hour, minute, second)
-    const targetDate = new Date(2025, 5, 1, 12, 0, 0).getTime();
+    const targetDate = new Date(2025, 5, 28, 12, 0, 0).getTime();
     createCountdown(targetDate);
   });
   
