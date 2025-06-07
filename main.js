@@ -186,8 +186,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     $('.owl-carousel').owlCarousel({
         loop:true,
-        autoplay:true,
-        autoplayTimeout:3000,
+        // autoplay:true,
+        // autoplayTimeout:3000,
         linear:true,
         autoplayHoverPause:true,
         margin:20,
