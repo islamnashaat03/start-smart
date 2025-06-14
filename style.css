@@ -1053,7 +1053,8 @@
 
             .hero-cta .btn {
                 width: fit-content;
-                min-width: 200px;
+                min-width: 125px;
+                padding: 10px 20px;
             }
 
             .pricing-card.featured {
@@ -1061,6 +1062,10 @@
             }
             .hero {
                 background-image: url('./assets/imgs/88.jpg');
+                background-size: contain;
+                height: auto;
+                min-height: 400px;
+                align-items: flex-end;
             }
             .course-benefits h4{
                 display: block;
