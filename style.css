@@ -1062,13 +1062,26 @@
             }
             .hero {
                 background-image: url('./assets/imgs/88.jpg');
-                background-size: contain;
+                background-size: cover;
                 height: auto;
                 min-height: 400px;
                 align-items: flex-end;
             }
             .course-benefits h4{
                 display: block;
+            }
+            header {
+                position: unset;
+                background-color: #fff;
+                .logo , .hamburger {
+                    color: var(--dark);
+
+                }
+            }
+            header.scrolled{
+                position: fixed;
+               
+                
             }
         }
 
@@ -1083,6 +1096,10 @@
 
             .hero {
                 text-align: center;
+                background-size: contain;
+                height: auto;
+                min-height: 400px;
+                align-items: flex-end;
             }
 
             .btn {
@@ -1090,5 +1107,8 @@
             }
             .logo{
                 font-size: 1.4rem;
+            }
+            .hero .container{
+                padding-bottom: 50px;
             }
         }
