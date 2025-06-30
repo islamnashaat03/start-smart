@@ -25,6 +25,10 @@
             --background: #ffffff;
             --light-background: #f3f4f6;
         }
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
 
         body {
             font-family: 'Poppins', 'Tajawal', sans-serif;
