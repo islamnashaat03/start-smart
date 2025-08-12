@@ -243,47 +243,74 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Countdown Timer Function
-function createCountdown(targetDate) {
-    // Get DOM elements to update
-    const daysElement = document.getElementById('days');
-    const hoursElement = document.getElementById('hours');
-    const minutesElement = document.getElementById('minutes');
-    const secondsElement = document.getElementById('seconds');
-    
-    // Update the countdown every second
-    const countdownInterval = setInterval(function() {
-      // Get current date and time
-      const currentDate = new Date().getTime();
-      
-      // Calculate the time difference between now and the target date
-      const timeRemaining = targetDate - currentDate;
-      
-      // Check if countdown is finished
-      if (timeRemaining <= 0) {
-        clearInterval(countdownInterval);
-        document.getElementById('countdown').innerHTML = "Countdown Expired!";
-        return;
-      }
-      
-      // Calculate days, hours, minutes, seconds
-      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-      
-      // Update the DOM elements
-      daysElement.innerHTML = days.toString().padStart(2, '0');
-      hoursElement.innerHTML = hours.toString().padStart(2, '0');
-      minutesElement.innerHTML = minutes.toString().padStart(2, '0');
-      secondsElement.innerHTML = seconds.toString().padStart(2, '0');
-      
-    }, 1000); // update every second
+// Build a date with NORMAL months (1–12). Example: 8 = August.
+function localDateMs(year, month1to12, day, hour = 0, minute = 0, second = 0) {
+  return new Date(year, month1to12 - 1, day, hour, minute, second).getTime();
+}
+
+function startPricingCountdown(targetDateMs) {
+  // Scope everything to the featured pricing card
+  const card = document.querySelector('.pricing-card.featured');
+  if (!card) return;
+
+  // Elements to update/hide
+  const countdown = card.querySelector('.countdown');
+  const daysEl = countdown?.querySelector('#days');
+  const hoursEl = countdown?.querySelector('#hours');
+  const minutesEl = countdown?.querySelector('#minutes');
+  const secondsEl = countdown?.querySelector('#seconds');
+
+  const promoMsg = card.querySelector('p'); // "Book in round 3..."
+  const pricingBlocks = card.querySelectorAll('.pricing-price');
+  const promoPriceBlock = pricingBlocks[0]; // the 1350 EGP block above the countdown
+  const finalPriceBlock = pricingBlocks[1]; // the 1500 EGP block below the countdown
+
+  // Safety: make sure final price shows 1500 EGP (in case you want to enforce it)
+  const finalNewPrice = finalPriceBlock?.querySelector('.new-price');
+  if (finalNewPrice) finalNewPrice.textContent = '1500 EGP';
+
+  const pad2 = n => String(n).padStart(2, '0');
+
+  function expireOffer() {
+    // Hide promo message, promo price, and countdown
+    if (promoMsg) promoMsg.style.display = 'none';
+    if (promoPriceBlock) promoPriceBlock.style.display = 'none';
+    if (countdown) countdown.style.display = 'none';
+
+    // Keep the final price (1500 EGP) visible
+    if (finalPriceBlock) finalPriceBlock.style.display = '';
   }
-// Usage example
-document.addEventListener('DOMContentLoaded', function() {
-    // Set your target date here (year, month (0-11), day, hour, minute, second)
-    const targetDate = new Date(2025, 6, 28, 12, 0, 0).getTime();
-    createCountdown(targetDate);
-  });
-  
-  // Alternative usage with dynamic target date setting
+
+  function tick() {
+    const diff = targetDateMs - Date.now();
+
+    if (diff <= 0) {
+      clearInterval(timer);
+      expireOffer();
+      return;
+    }
+
+    if (countdown && daysEl && hoursEl && minutesEl && secondsEl) {
+      const totalSec = Math.floor(diff / 1000);
+      const d = Math.floor(totalSec / 86400);
+      const h = Math.floor((totalSec % 86400) / 3600);
+      const m = Math.floor((totalSec % 3600) / 60);
+      const s = totalSec % 60;
+
+      daysEl.textContent = pad2(d);
+      hoursEl.textContent = pad2(h);
+      minutesEl.textContent = pad2(m);
+      secondsEl.textContent = pad2(s);
+    }
+  }
+
+  const timer = setInterval(tick, 1000);
+  tick(); // initial paint
+}
+
+// ===== Set your target date here (local time) =====
+// Example: 20 Aug 2025, 12:00 local time (month uses 1–12)
+document.addEventListener('DOMContentLoaded', function () {
+  const targetDate = localDateMs(2025, 8, 20, 12, 0, 0);
+  startPricingCountdown(targetDate);
+});
