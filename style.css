@@ -239,7 +239,7 @@
             color: var(--white);
             overflow: hidden;
             padding: 0;
-            background-image: url('./assets/imgs/lb.jpg');
+            background-image: url('./assets/imgs/heroimagePC.png');
             background-repeat: no-repeat;
             background-size: cover;
         }
